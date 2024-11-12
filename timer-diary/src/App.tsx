@@ -1,29 +1,22 @@
 import { useTimer } from "react-timer-hook";
 import "./App.css";
 
-function MyTimer({ expiryTimestamp }) {
-  const {
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({
-    expiryTimestamp,
-    onExpire: () => console.warn("onExpire called"),
-  });
+interface MyTimerProps {
+  expiryTimestamp: Date;
+}
+
+function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
+  const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
+    useTimer({
+      expiryTimestamp,
+      onExpire: () => console.warn("onExpire called"),
+    });
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>react-timer-hook </h1>
-      <p>Timer Demo</p>
+    <div className="text-center">
+      <h1>Timer Diary</h1>
       <div style={{ fontSize: "100px" }}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:
-        <span>{seconds}</span>
+        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
       <p>{isRunning ? "Running" : "Not running"}</p>
       <button onClick={start}>Start</button>
