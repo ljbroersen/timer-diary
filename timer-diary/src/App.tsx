@@ -39,55 +39,68 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
   };
 
   return (
-    <div className="text-center">
-      {showInputs ? (
-        <div>
-          <input
-            type="number"
-            placeholder="Hours"
-            value={customTime.hours}
-            onChange={(e) =>
-              setCustomTime({ ...customTime, hours: parseInt(e.target.value) })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Minutes"
-            value={customTime.minutes}
-            onChange={(e) =>
-              setCustomTime({
-                ...customTime,
-                minutes: parseInt(e.target.value),
-              })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Seconds"
-            value={customTime.seconds}
-            onChange={(e) =>
-              setCustomTime({
-                ...customTime,
-                seconds: parseInt(e.target.value),
-              })
-            }
-          />
-          <button onClick={handleStart}>Start</button>
-        </div>
-      ) : (
-        <div>
-          <h1>Timer Diary</h1>
-          <div className="text-[100px]">
-            <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+    <>
+      <div className="text-center">
+        {showInputs ? (
+          <div>
+            <input
+              type="number"
+              className="ml-2 mr-2 p-2"
+              placeholder="Hours"
+              value={customTime.hours}
+              onChange={(e) =>
+                setCustomTime({
+                  ...customTime,
+                  hours: parseInt(e.target.value),
+                })
+              }
+            />
+            <input
+              type="number"
+              className="ml-2 mr-2 p-2"
+              placeholder="Minutes"
+              value={customTime.minutes}
+              onChange={(e) =>
+                setCustomTime({
+                  ...customTime,
+                  minutes: parseInt(e.target.value),
+                })
+              }
+            />
+            <input
+              type="number"
+              className="ml-2 mr-2 p-2"
+              placeholder="Seconds"
+              value={customTime.seconds}
+              onChange={(e) =>
+                setCustomTime({
+                  ...customTime,
+                  seconds: parseInt(e.target.value),
+                })
+              }
+            />
+            <br />
+            <button onClick={handleStart}>Start</button>
           </div>
-          <p>{isRunning ? "Running" : "Not running"}</p>
-          <button onClick={start}>Start</button>
-          <button onClick={pause}>Pause</button>
-          <button onClick={resume}>Resume</button>
-          <button onClick={handleRestart}>Restart</button>
-        </div>
-      )}
-    </div>
+        ) : (
+          <div>
+            <h1>Timer Diary</h1>
+            <div className="text-[100px]">
+              <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+            </div>
+            <p>{isRunning ? "Running" : "Not running"}</p>
+
+            <button onClick={pause}>Pause</button>
+            <button onClick={resume}>Resume</button>
+            <button onClick={handleRestart}>Restart</button>
+          </div>
+        )}
+      </div>
+      <br />
+      <div className="text-center">
+        <p>There should be text here regardless of State.</p>
+      </div>
+    </>
   );
 }
 
