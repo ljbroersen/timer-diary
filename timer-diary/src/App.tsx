@@ -2,6 +2,7 @@ import { useTimer } from "react-timer-hook";
 import { useState } from "react";
 import "./App.css";
 import "../input.css";
+import Button from "./components/Button";
 
 interface MyTimerProps {
   expiryTimestamp: Date;
@@ -80,7 +81,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               }
             />
             <br />
-            <button onClick={handleStart}>Start</button>
+            <Button onClick={handleStart}>Start</Button>
           </div>
         ) : (
           <div>
@@ -90,26 +91,15 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
             </div>
             <p>{isRunning ? "Running" : "Not running"}</p>
 
-            <button onClick={pause}>Pause</button>
-            <button onClick={resume}>Resume</button>
-            <button onClick={handleRestart}>Restart</button>
+            <Button onClick={pause}>Pause</Button>
+            <Button onClick={resume}>Resume</Button>
+            <Button onClick={handleRestart}>Restart</Button>
           </div>
         )}
       </div>
-      <br />
       <div className="text-center">
         <p>There should be text here regardless of State.</p>
       </div>
     </>
   );
 }
-
-// export default function App() {
-//   const time = new Date();
-//   time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
-//   return (
-//     <div>
-//       <MyTimer expiryTimestamp={time} />
-//     </div>
-//   );
-// }
