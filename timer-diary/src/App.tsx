@@ -1,5 +1,6 @@
 import { useTimer } from "react-timer-hook";
 import "./App.css";
+import "../input.css";
 
 interface MyTimerProps {
   expiryTimestamp: Date;
@@ -15,7 +16,7 @@ function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
   return (
     <div className="text-center">
       <h1>Timer Diary</h1>
-      <div style={{ fontSize: "100px" }}>
+      <div className="text-[100px]">
         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
       <p>{isRunning ? "Running" : "Not running"}</p>
