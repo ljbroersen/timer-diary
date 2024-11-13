@@ -14,6 +14,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
     minutes: 0,
     seconds: 0,
   });
+  const [log, setLog] = useState<string[]>([]);
 
   const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
     useTimer({
@@ -35,6 +36,8 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
   };
 
   const handleRestart = () => {
+    const leftoverTime = `${hours}:${minutes}:${seconds}`;
+    setLog([...log, `Leftover time: ${leftoverTime}`]);
     setShowInputs(true);
   };
 
@@ -89,15 +92,18 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
             </div>
             <p>{isRunning ? "Running" : "Not running"}</p>
-
             <Button onClick={pause}>Pause</Button>
             <Button onClick={resume}>Resume</Button>
             <Button onClick={handleRestart}>Restart</Button>
           </div>
         )}
       </div>
+
       <div className="text-center">
-        <p>There should be text here regardless of State.</p>
+        <h2>Log</h2>
+        {log.map((logItem) => (
+          <p key={logItem}>{logItem}</p>
+        ))}
       </div>
     </>
   );

@@ -16,6 +16,7 @@ export default {
         h2: {
           fontSize: theme("fontSize.xl"),
           marginBottom: theme("spacing.4"),
+          marginTop: theme("spacing.4"),
         },
         h3: {
           fontSize: theme("fontSize.lg"),
