@@ -1,7 +1,6 @@
 import { useTimer } from "react-timer-hook";
 import { useState } from "react";
 import "./App.css";
-import "../input.css";
 import Button from "./components/Button";
 
 interface MyTimerProps {
@@ -42,6 +41,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
   return (
     <>
       <div className="text-center">
+        <h1>Timer Diary</h1>
         {showInputs ? (
           <div>
             <input
@@ -85,7 +85,6 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
           </div>
         ) : (
           <div>
-            <h1>Timer Diary</h1>
             <div className="text-[100px]">
               <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
             </div>
