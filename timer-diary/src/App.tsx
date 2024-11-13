@@ -36,9 +36,31 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
   };
 
   const handleRestart = () => {
-    const leftoverTime = `${hours}:${minutes}:${seconds}`;
-    setLog([...log, `Leftover time: ${leftoverTime}`]);
+    const leftoverTimeInMs = hours * 3600000 + minutes * 60000 + seconds * 1000;
+    const customTimeInMs =
+      customTime.hours * 3600000 +
+      customTime.minutes * 60000 +
+      customTime.seconds * 1000;
+
+    const differenceInMs = customTimeInMs - leftoverTimeInMs;
+
+    const formatTime = (ms: number) => {
+      const hours = Math.floor(ms / 3600000);
+      const minutes = Math.floor((ms % 3600000) / 60000);
+      const seconds = Math.floor((ms % 60000) / 1000);
+
+      return `${hours > 0 ? `${hours} hours` : ""}${minutes
+        .toString()
+        .padStart(2, "0")} minutes ${seconds
+        .toString()
+        .padStart(2, "0")} seconds`;
+    };
+
+    const difference = formatTime(differenceInMs);
+
+    setLog([...log, `Time passed: ${difference}`]);
     setShowInputs(true);
+    console.log(difference);
   };
 
   return (
