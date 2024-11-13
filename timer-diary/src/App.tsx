@@ -51,14 +51,14 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
 
       return `${hours > 0 ? `${hours} hours` : ""}${minutes
         .toString()
-        .padStart(2, "0")} minutes ${seconds
+        .padStart(1, "0")} minutes ${seconds
         .toString()
-        .padStart(2, "0")} seconds`;
+        .padStart(1, "0")} seconds`;
     };
 
     const difference = formatTime(differenceInMs);
 
-    setLog([...log, `Time passed: ${difference}`]);
+    setLog([...log, `${difference}`]);
     setShowInputs(true);
     console.log(difference);
   };
@@ -124,7 +124,10 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
       <div className="text-center">
         <h2>Log</h2>
         {log.map((logItem) => (
-          <p key={logItem}>{logItem}</p>
+          <div key={logItem} className="bg-sky-900 p-2 m-2 rounded">
+            <p>Time passed: {logItem}</p>
+            <p>Description:</p>
+          </div>
         ))}
       </div>
     </>
