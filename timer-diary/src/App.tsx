@@ -1,7 +1,6 @@
 import { useTimer } from "react-timer-hook";
 import { useState } from "react";
 import "./App.css";
-import "../input.css";
 import Button from "./components/Button";
 
 interface MyTimerProps {
@@ -15,6 +14,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
     minutes: 0,
     seconds: 0,
   });
+  const [log, setLog] = useState<string[]>([]);
 
   const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
     useTimer({
@@ -36,12 +36,37 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
   };
 
   const handleRestart = () => {
+    const leftoverTimeInMs = hours * 3600000 + minutes * 60000 + seconds * 1000;
+    const customTimeInMs =
+      customTime.hours * 3600000 +
+      customTime.minutes * 60000 +
+      customTime.seconds * 1000;
+
+    const differenceInMs = customTimeInMs - leftoverTimeInMs;
+
+    const formatTime = (ms: number) => {
+      const hours = Math.floor(ms / 3600000);
+      const minutes = Math.floor((ms % 3600000) / 60000);
+      const seconds = Math.floor((ms % 60000) / 1000);
+
+      return `${hours > 0 ? `${hours} hours` : ""}${minutes
+        .toString()
+        .padStart(1, "0")} minutes ${seconds
+        .toString()
+        .padStart(1, "0")} seconds`;
+    };
+
+    const difference = formatTime(differenceInMs);
+
+    setLog([...log, `${difference}`]);
     setShowInputs(true);
+    console.log(difference);
   };
 
   return (
     <>
       <div className="text-center">
+        <h1>Timer Diary</h1>
         {showInputs ? (
           <div>
             <input
@@ -85,20 +110,25 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
           </div>
         ) : (
           <div>
-            <h1>Timer Diary</h1>
             <div className="text-[100px]">
               <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
             </div>
             <p>{isRunning ? "Running" : "Not running"}</p>
-
             <Button onClick={pause}>Pause</Button>
             <Button onClick={resume}>Resume</Button>
             <Button onClick={handleRestart}>Restart</Button>
           </div>
         )}
       </div>
+
       <div className="text-center">
-        <p>There should be text here regardless of State.</p>
+        <h2>Log</h2>
+        {log.map((logItem) => (
+          <div key={logItem} className="bg-sky-900 p-2 m-2 rounded">
+            <p>Time passed: {logItem}</p>
+            <p>Description:</p>
+          </div>
+        ))}
       </div>
     </>
   );
