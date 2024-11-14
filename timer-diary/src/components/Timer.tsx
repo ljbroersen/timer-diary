@@ -1,11 +1,11 @@
 import { useTimer } from "react-timer-hook";
 import { useState } from "react";
-import "./App.css";
+import "../App.css";
 import Button from "./Button";
 
 interface MyTimerProps {
   expiryTimestamp?: Date;
-  onRestart?: () => void; // Optional callback for restart
+  onRestart?: (newLog: string) => void; // Optional callback for restart
 }
 
 export default function Timer({ expiryTimestamp, onRestart }: MyTimerProps) {
