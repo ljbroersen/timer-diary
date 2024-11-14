@@ -4,10 +4,10 @@ import "./App.css";
 import Button from "./components/Button";
 
 interface MyTimerProps {
-  expiryTimestamp: Date;
+  expiryTimestamp?: Date;
 }
 
-export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
+export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
   const [showInputs, setShowInputs] = useState<boolean>(true);
   const [customTime, setCustomTime] = useState({
     hours: 0,
@@ -19,8 +19,8 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
 
   const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
     useTimer({
-      expiryTimestamp,
-      onExpire: () => alert("Finished!"),
+      expiryTimestamp: expiryTimestamp || new Date(),
+      // onExpire: () => alert("Finished!"),
     });
 
   const handleStart = () => {
@@ -82,7 +82,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               onChange={(e) =>
                 setCustomTime({
                   ...customTime,
-                  hours: parseInt(e.target.value),
+                  hours: e.target.value === "" ? 0 : parseInt(e.target.value),
                 })
               }
             />
@@ -94,7 +94,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               onChange={(e) =>
                 setCustomTime({
                   ...customTime,
-                  minutes: parseInt(e.target.value),
+                  minutes: e.target.value === "" ? 0 : parseInt(e.target.value),
                 })
               }
             />
@@ -106,7 +106,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               onChange={(e) =>
                 setCustomTime({
                   ...customTime,
-                  seconds: parseInt(e.target.value),
+                  seconds: e.target.value === "" ? 0 : parseInt(e.target.value),
                 })
               }
             />
