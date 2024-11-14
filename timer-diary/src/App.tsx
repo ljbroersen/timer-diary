@@ -16,12 +16,19 @@ export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
   });
   const [timerDescription, setTimerDescription] = useState<string>("");
   const [log, setLog] = useState<string[]>([]);
+  const [currentLogDate, setCurrentLogDate] = useState<Date | null>(null);
 
   const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
     useTimer({
       expiryTimestamp: expiryTimestamp || new Date(),
       // onExpire: () => alert("Finished!"),
     });
+
+  const formatDate = (date: Date) => {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    return `${day}/${month}`;
+  };
 
   const handleStart = () => {
     if (showInputs) {
@@ -60,12 +67,18 @@ export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
     const difference = formatTime(differenceInMs);
 
     const currentDescription = timerDescription;
-    setLog([
-      ...log,
-      `Time passed: ${difference}<br />Description: ${currentDescription}`,
-    ]);
-    setShowInputs(true);
-    setTimerDescription("");
+    const currentDate = new Date();
+    const newLog = `Time passed: ${difference}<br />Description: ${currentDescription}`;
+    if (!currentLogDate || currentDate.getDate() !== currentLogDate.getDate()) {
+      setCurrentLogDate(currentDate);
+      setLog([newLog]);
+      setShowInputs(true);
+      setTimerDescription("");
+    } else {
+      setLog([...log, newLog]);
+      setShowInputs(true);
+      setTimerDescription("");
+    }
   };
 
   return (
@@ -145,18 +158,15 @@ export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
           <div className="flex flex-row mt-6">
             <div className="flex flex-col w-3/12 mr-2">
               <h2>Date</h2>
-              <p>Text</p>
-              <p>More text</p>
+              {currentLogDate && <h3>{formatDate(currentLogDate)}</h3>}
             </div>
             <div className="flex flex-col w-9/12 ml-2">
               <h2>Log</h2>
-              <div className="flex flex-col">
-                {log.map((logItem) => (
-                  <div key={logItem} className="bg-zinc-900 p-2 m-2">
-                    <div dangerouslySetInnerHTML={{ __html: logItem }} />
-                  </div>
-                ))}
-              </div>
+              {log.map((logItem) => (
+                <div key={logItem} className="bg-zinc-900 p-2 m-2">
+                  <div dangerouslySetInnerHTML={{ __html: logItem }} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
