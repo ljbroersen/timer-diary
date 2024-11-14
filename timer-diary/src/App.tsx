@@ -52,9 +52,9 @@ export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
 
       return `${hours > 0 ? `${hours} hours` : ""}${minutes
         .toString()
-        .padStart(1, "0")} minutes ${seconds
+        .padStart(1, "0")} minute(s), ${seconds
         .toString()
-        .padStart(1, "0")} seconds`;
+        .padStart(1, "0")} second(s)`;
     };
 
     const difference = formatTime(differenceInMs);
