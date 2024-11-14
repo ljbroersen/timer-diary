@@ -4,22 +4,23 @@ import "./App.css";
 import Button from "./components/Button";
 
 interface MyTimerProps {
-  expiryTimestamp: Date;
+  expiryTimestamp?: Date;
 }
 
-export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
-  const [showInputs, setShowInputs] = useState(true);
+export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
+  const [showInputs, setShowInputs] = useState<boolean>(true);
   const [customTime, setCustomTime] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
+  const [timerDescription, setTimerDescription] = useState<string>("");
   const [log, setLog] = useState<string[]>([]);
 
   const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
     useTimer({
-      expiryTimestamp,
-      onExpire: () => console.warn("onExpire called"),
+      expiryTimestamp: expiryTimestamp || new Date(),
+      // onExpire: () => alert("Finished!"),
     });
 
   const handleStart = () => {
@@ -51,16 +52,20 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
 
       return `${hours > 0 ? `${hours} hours` : ""}${minutes
         .toString()
-        .padStart(1, "0")} minutes ${seconds
+        .padStart(1, "0")} minute(s), ${seconds
         .toString()
-        .padStart(1, "0")} seconds`;
+        .padStart(1, "0")} second(s)`;
     };
 
     const difference = formatTime(differenceInMs);
 
-    setLog([...log, `${difference}`]);
+    const currentDescription = timerDescription;
+    setLog([
+      ...log,
+      `Time passed: ${difference}<br />Description: ${currentDescription}`,
+    ]);
     setShowInputs(true);
-    console.log(difference);
+    setTimerDescription("");
   };
 
   return (
@@ -77,7 +82,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               onChange={(e) =>
                 setCustomTime({
                   ...customTime,
-                  hours: parseInt(e.target.value),
+                  hours: e.target.value === "" ? 0 : parseInt(e.target.value),
                 })
               }
             />
@@ -89,7 +94,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               onChange={(e) =>
                 setCustomTime({
                   ...customTime,
-                  minutes: parseInt(e.target.value),
+                  minutes: e.target.value === "" ? 0 : parseInt(e.target.value),
                 })
               }
             />
@@ -101,18 +106,30 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
               onChange={(e) =>
                 setCustomTime({
                   ...customTime,
-                  seconds: parseInt(e.target.value),
+                  seconds: e.target.value === "" ? 0 : parseInt(e.target.value),
                 })
               }
             />
+            <p className="m-2 mt-4">Description of activity</p>
+            <input
+              type="text"
+              className="ml-2 mr-2 p-2 w-4/5"
+              placeholder="What are you going to do?"
+              value={timerDescription}
+              onChange={(e) => setTimerDescription(e.target.value)}
+            />
+
             <br />
             <Button onClick={handleStart}>Start</Button>
           </div>
         ) : (
           <div>
             <div className="text-[100px]">
-              <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+              <span>{hours.toString().padStart(2, "0")}</span>:
+              <span>{minutes.toString().padStart(2, "0")}</span>:
+              <span>{seconds.toString().padStart(2, "0")}</span>
             </div>
+
             <p>{isRunning ? "Running" : "Not running"}</p>
             <Button onClick={pause}>Pause</Button>
             <Button onClick={resume}>Resume</Button>
@@ -124,9 +141,8 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
       <div className="text-center">
         <h2>Log</h2>
         {log.map((logItem) => (
-          <div key={logItem} className="bg-sky-900 p-2 m-2 rounded">
-            <p>Time passed: {logItem}</p>
-            <p>Description:</p>
+          <div key={logItem} className="bg-zinc-900 p-2 m-2">
+            <div dangerouslySetInnerHTML={{ __html: logItem }} />
           </div>
         ))}
       </div>
