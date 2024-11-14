@@ -60,7 +60,10 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
     const difference = formatTime(differenceInMs);
 
     const currentDescription = timerDescription;
-    setLog([...log, `${difference}<br />Description: ${currentDescription}`]);
+    setLog([
+      ...log,
+      `Time passed: ${difference}<br />Description: ${currentDescription}`,
+    ]);
     setShowInputs(true);
     setTimerDescription("");
   };
@@ -107,7 +110,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
                 })
               }
             />
-            <p className="m-2">Description of activity</p>
+            <p className="m-2 mt-4">Description of activity</p>
             <input
               type="text"
               className="ml-2 mr-2 p-2 w-4/5"
