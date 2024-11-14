@@ -85,7 +85,7 @@ export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
     <>
       <div className="flex flex-col h-screen">
         <div className="text-center">
-          <h1>Timer Diary</h1>
+          <h1>Timer</h1>
           {showInputs ? (
             <div>
               <input
@@ -152,19 +152,23 @@ export default function MyTimer({ expiryTimestamp }: MyTimerProps) {
             </div>
           )}
         </div>
-
-        <div className="flex flex-row mt-6">
-          <div className="flex flex-col w-3/12 mr-2">
-            <h2>Date</h2>
-            {currentLogDate && <h3>{formatDate(currentLogDate)}</h3>}
-          </div>
-          <div className="flex flex-col w-9/12 ml-2 fixed-width">
-            <h2>Log</h2>
-            {log.map((logItem) => (
-              <div key={logItem} className="bg-zinc-900 p-2 m-2">
-                <div dangerouslySetInnerHTML={{ __html: logItem }} />
-              </div>
-            ))}
+        <div className="mt-6">
+          <h1>Diary</h1>
+          <div className="flex flex-row">
+            <div className="flex flex-col w-3/12 mr-2">
+              <h2>Date</h2>
+              <Button>
+                {currentLogDate && <h4>{formatDate(currentLogDate)}</h4>}
+              </Button>
+            </div>
+            <div className="flex flex-col w-9/12 ml-2 fixed-width">
+              <h2>Log</h2>
+              {log.map((logItem) => (
+                <div key={logItem} className="bg-zinc-900 p-2 m-2">
+                  <div dangerouslySetInnerHTML={{ __html: logItem }} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
