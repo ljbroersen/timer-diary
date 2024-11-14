@@ -4,7 +4,11 @@ const plugin = require("tailwindcss/plugin");
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        zinc: { 900: "#121212" },
+      },
+    },
   },
   plugins: [
     plugin(function ({ addBase, theme }) {

@@ -111,8 +111,11 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
         ) : (
           <div>
             <div className="text-[100px]">
-              <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+              <span>{hours.toString().padStart(2, "0")}</span>:
+              <span>{minutes.toString().padStart(2, "0")}</span>:
+              <span>{seconds.toString().padStart(2, "0")}</span>
             </div>
+
             <p>{isRunning ? "Running" : "Not running"}</p>
             <Button onClick={pause}>Pause</Button>
             <Button onClick={resume}>Resume</Button>
@@ -124,7 +127,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
       <div className="text-center">
         <h2>Log</h2>
         {log.map((logItem) => (
-          <div key={logItem} className="bg-sky-900 p-2 m-2 rounded">
+          <div key={logItem} className="bg-zinc-900 p-2 m-2">
             <p>Time passed: {logItem}</p>
             <p>Description:</p>
           </div>
