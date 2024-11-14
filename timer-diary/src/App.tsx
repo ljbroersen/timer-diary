@@ -32,7 +32,7 @@ export default function App() {
           <h2>Date</h2>
           {currentLogDate && <h3>{formatDate(currentLogDate)}</h3>}
         </div>
-        <div className="flex flex-col w-9/12 ml-2">
+        <div className="flex flex-col w-9/12 ml-2 fixed-width">
           <h2>Log</h2>
           <div className="flex flex-col">
             {log.map((logItem) => (
