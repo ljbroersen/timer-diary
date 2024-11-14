@@ -8,18 +8,19 @@ interface MyTimerProps {
 }
 
 export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
-  const [showInputs, setShowInputs] = useState(true);
+  const [showInputs, setShowInputs] = useState<boolean>(true);
   const [customTime, setCustomTime] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
+  const [timerDescription, setTimerDescription] = useState<string>("");
   const [log, setLog] = useState<string[]>([]);
 
   const { seconds, minutes, hours, isRunning, start, pause, resume, restart } =
     useTimer({
       expiryTimestamp,
-      onExpire: () => console.warn("onExpire called"),
+      onExpire: () => alert("Finished!"),
     });
 
   const handleStart = () => {
@@ -58,9 +59,10 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
 
     const difference = formatTime(differenceInMs);
 
-    setLog([...log, `${difference}`]);
+    const currentDescription = timerDescription;
+    setLog([...log, `${difference}<br />Description: ${currentDescription}`]);
     setShowInputs(true);
-    console.log(difference);
+    setTimerDescription("");
   };
 
   return (
@@ -105,6 +107,15 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
                 })
               }
             />
+            <p className="m-2">Description of activity</p>
+            <input
+              type="text"
+              className="ml-2 mr-2 p-2 w-4/5"
+              placeholder="What are you going to do?"
+              value={timerDescription}
+              onChange={(e) => setTimerDescription(e.target.value)}
+            />
+
             <br />
             <Button onClick={handleStart}>Start</Button>
           </div>
@@ -128,8 +139,7 @@ export default function MyTimer({ expiryTimestamp }: Readonly<MyTimerProps>) {
         <h2>Log</h2>
         {log.map((logItem) => (
           <div key={logItem} className="bg-zinc-900 p-2 m-2">
-            <p>Time passed: {logItem}</p>
-            <p>Description:</p>
+            <div dangerouslySetInnerHTML={{ __html: logItem }} />
           </div>
         ))}
       </div>
