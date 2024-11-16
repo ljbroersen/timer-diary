@@ -1,18 +1,29 @@
 import express from "express";
-const cors = require("cors");
+import cors from "cors";
+import knex from "./knex.js";
 const app = express();
 const port = 10000;
 
 app.use(cors());
 
 app.get("/dates", async (req, res) => {
-  const dates = await knex.select().table("dates_table");
-  res.send(JSON.stringify(dates));
+  try {
+    const dates = await knex("date_table").select();
+    res.json(dates);
+  } catch (error) {
+    console.error("Error fetching dates:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.get("/logs", async (req, res) => {
-  const logs = await knex.select().table("logs_table");
-  res.send(JSON.stringify(logs));
+  try {
+    const logs = await knex("logs_table").select();
+    res.json(logs);
+  } catch (error) {
+    console.error("Error fetching dates:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.post("/logs/create", async (req, res) => {
