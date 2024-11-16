@@ -8,7 +8,10 @@ interface MyTimerProps {
   onRestart?: (newLog: string) => void; // Optional callback for restart
 }
 
-export default function Timer({ expiryTimestamp, onRestart }: MyTimerProps) {
+export default function Timer({
+  expiryTimestamp,
+  onRestart,
+}: Readonly<MyTimerProps>) {
   const [showInputs, setShowInputs] = useState<boolean>(true);
   const [customTime, setCustomTime] = useState({
     hours: 0,

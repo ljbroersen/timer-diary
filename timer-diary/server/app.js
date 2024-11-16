@@ -8,7 +8,7 @@ app.use(cors());
 
 app.get("/dates", async (req, res) => {
   try {
-    const dates = await knex("date_table").select();
+    const dates = await knex.select().table("date_table");
     res.json(dates);
   } catch (error) {
     console.error("Error fetching dates:", error);
@@ -18,7 +18,7 @@ app.get("/dates", async (req, res) => {
 
 app.get("/logs", async (req, res) => {
   try {
-    const logs = await knex("logs_table").select();
+    const logs = await knex.select().table("logs_table");
     res.json(logs);
   } catch (error) {
     console.error("Error fetching dates:", error);
@@ -30,7 +30,7 @@ app.post("/logs/create", async (req, res) => {
   const { date, timer_leftover, description } = req.body;
 
   try {
-    let dateRecord = await knex("date_table").where({ date }).first();
+    let dateRecord = await knex.table("date_table").where({ date }).first();
 
     if (!dateRecord) {
       const [newDate] = await knex("date_table")
