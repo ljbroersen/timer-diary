@@ -5,10 +5,13 @@ import Button from "./Button";
 
 interface MyTimerProps {
   expiryTimestamp?: Date;
-  onRestart?: (newLog: string) => void; // Optional callback for restart
+  onRestart?: (difference: string, description: string) => void;
 }
 
-export default function Timer({ expiryTimestamp, onRestart }: MyTimerProps) {
+export default function Timer({
+  expiryTimestamp,
+  onRestart,
+}: Readonly<MyTimerProps>) {
   const [showInputs, setShowInputs] = useState<boolean>(true);
   const [customTime, setCustomTime] = useState({
     hours: 0,
@@ -50,19 +53,17 @@ export default function Timer({ expiryTimestamp, onRestart }: MyTimerProps) {
       const minutes = Math.floor((ms % 3600000) / 60000);
       const seconds = Math.floor((ms % 60000) / 1000);
 
-      return `${hours > 0 ? `${hours} hours` : ""}${minutes
+      return `${hours > 0 ? `${hours}` : "00"}:${minutes
         .toString()
-        .padStart(1, "0")} minute(s), ${seconds
-        .toString()
-        .padStart(1, "0")} second(s)`;
+        .padStart(2, "00")}:${seconds.toString().padStart(2, "00")}`;
     };
 
     const difference = formatTime(differenceInMs);
-
     const currentDescription = timerDescription;
 
-    const newLog = `Time passed: ${difference}<br />Description: ${currentDescription}`;
-    onRestart?.(newLog);
+    if (onRestart) {
+      onRestart(difference, currentDescription);
+    }
 
     setShowInputs(true);
     setTimerDescription("");
