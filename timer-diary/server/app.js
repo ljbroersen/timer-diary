@@ -5,6 +5,7 @@ const app = express();
 const port = 10000;
 
 app.use(cors());
+app.use(express.json());
 
 app.get("/dates", async (req, res) => {
   try {
@@ -36,6 +37,7 @@ app.post("/logs/create", async (req, res) => {
       const [newDate] = await knex("date_table")
         .insert({ date })
         .returning("id");
+
       dateRecord = { id: newDate.id, date };
     }
 

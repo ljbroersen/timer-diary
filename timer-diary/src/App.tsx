@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function App() {
   const [log, setLog] = useState<string[]>([]);
   const [currentLogDate, setCurrentLogDate] = useState<Date | null>(null);
+  const URL = "http://localhost:10000";
 
   const formatDate = (date: Date) => {
     const day = date.getDate().toString().padStart(2, "0");
@@ -12,13 +13,46 @@ export default function App() {
     return `${day}/${month}`;
   };
 
+  const createLog = async (
+    date: Date,
+    timer_leftover: string,
+    description: string
+  ) => {
+    try {
+      const response = await fetch(`${URL}/logs/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          date,
+          timer_leftover,
+          description,
+        }),
+      });
+
+      if (response.ok) {
+        const newLog = await response.json();
+        console.log("Log created:", newLog);
+      } else {
+        console.error("Failed to create log");
+      }
+    } catch (error) {
+      console.error("Error sending POST request:", error);
+    }
+  };
+
   const handleRestart = (newLog: string) => {
     const currentDate = new Date();
     if (!currentLogDate || currentDate.getDate() !== currentLogDate.getDate()) {
       setCurrentLogDate(currentDate);
       setLog([newLog]);
+
+      createLog(currentDate, formatDate(currentDate), newLog);
     } else {
       setLog([...log, newLog]);
+
+      createLog(currentDate, formatDate(currentDate), newLog);
     }
   };
 
