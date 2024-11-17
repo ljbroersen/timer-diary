@@ -7,7 +7,6 @@ const port = 10000;
 app.use(cors());
 app.use(express.json());
 
-// Get all dates from date_table
 app.get("/dates", async (req, res) => {
   try {
     const dates = await knex.select().table("date_table");
@@ -19,9 +18,11 @@ app.get("/dates", async (req, res) => {
 });
 
 app.get("/logs", async (req, res) => {
-  const { dateId } = req.query; // Extract dateId from the query parameters
+  const { dateId } = req.query;
+  console.log("Received dateId:", dateId);
+
   try {
-    const logs = await knex("logs_table").where("date_id", dateId); // Filter logs by date_id
+    const logs = await knex("logs_table").where("date_id", dateId);
     res.json(logs);
   } catch (error) {
     console.error("Error fetching logs:", error);
