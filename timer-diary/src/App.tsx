@@ -19,7 +19,7 @@ export default function App() {
   const [log, setLog] = useState<LogItem[]>([]);
   const [dates, setDates] = useState<DateRecord[]>([]);
   const [currentLogDate, setCurrentLogDate] = useState<Date | null>(null);
-  const [selectedDateId, setSelectedDateId] = useState<number | null>(null);
+  const [selectedDateId, setSelectedDateId] = useState<number>(0);
   const URL = "http://localhost:10000";
 
   useEffect(() => {
