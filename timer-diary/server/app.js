@@ -19,7 +19,6 @@ app.get("/dates", async (req, res) => {
 
 app.get("/logs", async (req, res) => {
   const { dateId } = req.query;
-  console.log("Received dateId:", dateId);
 
   try {
     const logs = await knex("logs_table").where("date_id", dateId);

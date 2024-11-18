@@ -74,7 +74,6 @@ export default function App() {
     const currentDate = new Date();
 
     if (!currentLogDate || currentDate.getDate() !== currentLogDate.getDate()) {
-      console.log("Setting new current log date:", currentDate);
       setCurrentLogDate(currentDate);
     }
 
@@ -103,7 +102,6 @@ export default function App() {
 
     try {
       const formattedDate = formatDate(date);
-      console.log("Sending POST request with date:", formattedDate);
 
       const response = await fetch(`${URL}/logs/create`, {
         method: "POST",
@@ -118,8 +116,7 @@ export default function App() {
       });
 
       if (response.ok) {
-        const newLog = await response.json();
-        console.log("Log created:", newLog);
+        await response.json();
       } else {
         console.error("Failed to create log");
       }
