@@ -18,11 +18,13 @@ app.get("/dates", async (req, res) => {
 });
 
 app.get("/logs", async (req, res) => {
+  const { dateId } = req.query;
+
   try {
-    const logs = await knex.select().table("logs_table");
+    const logs = await knex("logs_table").where("date_id", dateId);
     res.json(logs);
   } catch (error) {
-    console.error("Error fetching dates:", error);
+    console.error("Error fetching logs:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
