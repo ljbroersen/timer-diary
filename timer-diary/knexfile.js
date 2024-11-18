@@ -1,4 +1,5 @@
 // Update with your config settings.
+require("dotenv").config({ path: "./server/.env.local" });
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -8,9 +9,9 @@ export const development = {
   connection: {
     host: "localhost",
     port: 5432,
-    database: "timer_diary",
-    user: "postgres",
-    password: "maxwell",
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
   },
 };
 export const production = {
