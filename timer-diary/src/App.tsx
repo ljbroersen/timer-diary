@@ -117,11 +117,26 @@ export default function App() {
 
       if (response.ok) {
         await response.json();
+        fetchLogsForDate(selectedDateId);
       } else {
         console.error("Failed to create log");
       }
     } catch (error) {
       console.error("Error sending POST request:", error);
+    }
+  };
+
+  const fetchLogsForDate = async (dateId: number) => {
+    try {
+      const response = await fetch(`${URL}/logs?dateId=${dateId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setLog(data);
+      } else {
+        console.error("Failed to fetch logs after creating a new log");
+      }
+    } catch (error) {
+      console.error("Error fetching logs:", error);
     }
   };
 
