@@ -75,7 +75,7 @@ export default function Timer({
         <div>
           <input
             type="number"
-            className="ml-2 mr-2 p-2"
+            className="ml-2 mr-2 p-2 bg-emerald-700 border-2 border-emerald-800"
             placeholder="Hours"
             value={customTime.hours}
             onChange={(e) =>
@@ -87,7 +87,7 @@ export default function Timer({
           />
           <input
             type="number"
-            className="ml-2 mr-2 p-2"
+            className="ml-2 mr-2 p-2 bg-emerald-700 border-2 border-emerald-800"
             placeholder="Minutes"
             value={customTime.minutes}
             onChange={(e) =>
@@ -99,7 +99,7 @@ export default function Timer({
           />
           <input
             type="number"
-            className="ml-2 mr-2 p-2"
+            className="ml-2 mr-2 p-2 bg-emerald-700 border-2 border-emerald-800"
             placeholder="Seconds"
             value={customTime.seconds}
             onChange={(e) =>
@@ -112,7 +112,7 @@ export default function Timer({
           <p className="m-2 mt-4">Description of activity</p>
           <input
             type="text"
-            className="ml-2 mr-2 p-2 w-4/5"
+            className="ml-2 mr-2 p-2 w-4/5 bg-emerald-700 border-2 border-emerald-800"
             placeholder="What are you going to do?"
             value={timerDescription}
             onChange={(e) => setTimerDescription(e.target.value)}

@@ -147,8 +147,8 @@ export default function App() {
         <Timer onRestart={handleRestart} />
       </div>
       <div className="flex flex-row mt-6">
-        <div className="flex flex-col w-3/12 mr-2 border-2 border-gray-600">
-          <h2 className="underline-offset-8 underline decoration-gray-600 decoration-2">
+        <div className="flex flex-col w-3/12 mr-2 border-2 border-emerald-800 bg-emerald-700">
+          <h2 className="underline-offset-8 underline decoration-white decoration-2">
             Dates
           </h2>
           {dates.length === 0 ? (
@@ -167,8 +167,8 @@ export default function App() {
           )}
         </div>
 
-        <div className="flex flex-col w-9/12 ml-2 border-2 border-gray-600">
-          <h2 className="underline-offset-8 underline decoration-gray-600 decoration-2 fixed-width">
+        <div className="flex flex-col w-9/12 ml-2 border-2 border-emerald-800 bg-emerald-700">
+          <h2 className="underline-offset-8 underline decoration-white decoration-2 fixed-width">
             Log
           </h2>
           <div className="flex flex-col">
