@@ -234,8 +234,13 @@ export default function App() {
                     key={logItem.id}
                     className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
                   >
-                    <div>
-                      {logItem.timer_leftover} - {logItem.description}
+                    <div className="flex flex-col">
+                      <p className="break-words overflow-hidden text-ellipsis">
+                        Time: {logItem.timer_leftover}
+                      </p>
+                      <p className="break-words overflow-hidden text-ellipsis">
+                        Description: {logItem.description}
+                      </p>
                     </div>
                   </div>
                 ))
