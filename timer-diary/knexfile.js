@@ -1,6 +1,6 @@
 // Update with your config settings.
 import dotenv from "dotenv";
-dotenv.config({ path: "./server/.env.local" });
+dotenv.config({ path: "./server/env.local" });
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
