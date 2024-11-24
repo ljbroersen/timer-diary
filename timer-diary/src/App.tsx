@@ -180,7 +180,10 @@ export default function App() {
                   return logItem.date_id === selectedDateId;
                 })
                 .map((logItem) => (
-                  <div key={logItem.id} className="bg-zinc-900 p-2 m-2">
+                  <div
+                    key={logItem.id}
+                    className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
+                  >
                     <div>
                       {logItem.timer_leftover} - {logItem.description}
                     </div>

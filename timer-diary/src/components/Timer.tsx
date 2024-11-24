@@ -109,10 +109,12 @@ export default function Timer({
               })
             }
           />
-          <p className="m-2 mt-4">Description of activity</p>
+          <p className="m-2 mt-4 text-pink-400 font-alegreya text-lg">
+            Description of activity
+          </p>
           <input
             type="text"
-            className="ml-2 mr-2 p-2 w-4/5 bg-emerald-700 border-2 border-emerald-800"
+            className="ml-2 mr-2 mb-5 p-2 w-4/5 bg-emerald-700 border-2 border-emerald-800 placeholder-white"
             placeholder="What are you going to do?"
             value={timerDescription}
             onChange={(e) => setTimerDescription(e.target.value)}

@@ -3,12 +3,13 @@ const plugin = require("tailwindcss/plugin");
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+
   theme: {
     extend: {
       colors: {
         zinc: { 900: "#121212" },
         pink: { 400: "#fc8b8d" },
-        emerald: { 700: "#3e574b", 800: "#31493c" },
+        emerald: { 700: "#3e574b", 800: "#31493c", 900: "#385245" },
       },
       fontFamily: {
         alegreya: ['"Alegreya"', "serif"],
