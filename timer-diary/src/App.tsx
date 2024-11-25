@@ -172,7 +172,7 @@ export default function App() {
   return (
     <div className="flex flex-col h-screen fixed-width">
       <div>
-        <h1>Timer</h1>
+        <h1 className="">Timer</h1>
         <Timer onRestart={handleRestart} />
       </div>
       <div className="flex flex-row mt-6">

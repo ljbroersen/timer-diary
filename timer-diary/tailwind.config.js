@@ -21,7 +21,7 @@ export default {
       addBase({
         h1: {
           fontSize: theme("fontSize.5xl"),
-          marginBottom: theme("spacing.6"),
+          marginBottom: theme("spacing.4"),
           fontFamily: theme("fontFamily.alegreya"),
           color: theme("colors.pink.400"),
         },
