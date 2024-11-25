@@ -22,6 +22,8 @@ export default function App() {
   const [selectedDateId, setSelectedDateId] = useState<number>(0);
   const [visibleIndex, setVisibleIndex] = useState<number>(0);
   const datesPerPage = 5;
+  const [visibleLogIndex, setVisibleLogIndex] = useState<number>(0);
+  const logsPerPage = 2;
   const URL = "http://localhost:10000";
 
   useEffect(() => {
@@ -150,6 +152,16 @@ export default function App() {
     setVisibleIndex((prev) => Math.max(prev - datesPerPage, 0));
   };
 
+  const showMoreLogs = () => {
+    setVisibleLogIndex((prev) =>
+      Math.min(prev + logsPerPage, log.length - logsPerPage)
+    );
+  };
+
+  const showPreviousLogs = () => {
+    setVisibleLogIndex((prev) => Math.max(prev - logsPerPage, 0));
+  };
+
   return (
     <div className="flex flex-col h-screen fixed-width">
       <div>
@@ -223,22 +235,70 @@ export default function App() {
           <h2 className="underline-offset-8 underline decoration-white decoration-2">
             Log
           </h2>
+          <div className="flex justify-center mb-4 sticky top-0">
+            {visibleLogIndex > 0 && (
+              <div className="cursor-pointer" onClick={showPreviousLogs}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-6 h-6 text-white"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 15l-7-7-7 7"
+                  />
+                </svg>
+              </div>
+            )}
+          </div>
           <div className="flex flex-col">
             {log.length === 0 ? (
               <div>No logs for this date.</div>
             ) : (
               log
                 .filter((logItem) => logItem.date_id === selectedDateId)
+                .slice(visibleLogIndex, visibleLogIndex + logsPerPage)
                 .map((logItem) => (
                   <div
                     key={logItem.id}
                     className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
                   >
-                    <div>
-                      {logItem.timer_leftover} - {logItem.description}
+                    <div className="flex flex-col">
+                      <p className="break-words overflow-hidden text-ellipsis">
+                        Time: {logItem.timer_leftover}
+                      </p>
+                      <p className="break-words overflow-hidden text-ellipsis whitespace-pre-wrap">
+                        Description: {logItem.description}
+                      </p>
                     </div>
                   </div>
                 ))
+            )}
+          </div>
+          <div className="flex justify-center mt-4 sticky bottom-0">
+            {visibleLogIndex + logsPerPage <
+              log.filter((logItem) => logItem.date_id === selectedDateId)
+                .length && (
+              <div className="cursor-pointer" onClick={showMoreLogs}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-6 h-6 text-white"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
             )}
           </div>
         </div>
