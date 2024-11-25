@@ -194,6 +194,7 @@ export default function App() {
                   key={dateRecord.id}
                   onClick={() => {
                     setSelectedDateId(dateRecord.id);
+                    setVisibleLogIndex(0);
                   }}
                 >
                   <h4>{dateRecord.date}</h4>
