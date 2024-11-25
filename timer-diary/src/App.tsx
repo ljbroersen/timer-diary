@@ -238,7 +238,7 @@ export default function App() {
                       <p className="break-words overflow-hidden text-ellipsis">
                         Time: {logItem.timer_leftover}
                       </p>
-                      <p className="break-words overflow-hidden text-ellipsis">
+                      <p className="break-words overflow-hidden text-ellipsis whitespace-pre-wrap">
                         Description: {logItem.description}
                       </p>
                     </div>
