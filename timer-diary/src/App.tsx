@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Timer from "./components/Timer";
 import Button from "./components/Button";
+import { ArrowUp } from "./components/ArrowUp";
+import { ArrowDown } from "./components/ArrowDown";
 
 type LogItem = {
   id: number;
@@ -179,25 +181,9 @@ export default function App() {
             Dates
           </h2>
           <div className="flex justify-center mb-4 sticky top-0">
-            {visibleIndex > 0 && (
-              <div className="cursor-pointer" onClick={showPreviousDates}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-white"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 15l-7-7-7 7"
-                  />
-                </svg>
-              </div>
-            )}
+            {visibleIndex > 0 && <ArrowUp onClick={showPreviousDates} />}
           </div>
+
           {dates.length === 0 ? (
             <div>No dates available</div>
           ) : (
@@ -208,6 +194,7 @@ export default function App() {
                   key={dateRecord.id}
                   onClick={() => {
                     setSelectedDateId(dateRecord.id);
+                    setVisibleLogIndex(0);
                   }}
                 >
                   <h4>{dateRecord.date}</h4>
@@ -216,22 +203,7 @@ export default function App() {
           )}
           <div className="flex justify-center mt-4 sticky bottom-0">
             {visibleIndex + datesPerPage < dates.length && (
-              <div className="cursor-pointer" onClick={showMoreDates}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-white"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
+              <ArrowDown onClick={showMoreDates} />
             )}
           </div>
         </div>
@@ -241,24 +213,7 @@ export default function App() {
             Log
           </h2>
           <div className="flex justify-center mb-4 sticky top-0">
-            {visibleLogIndex > 0 && (
-              <div className="cursor-pointer" onClick={showPreviousLogs}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-white"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 15l-7-7-7 7"
-                  />
-                </svg>
-              </div>
-            )}
+            {visibleLogIndex > 0 && <ArrowUp onClick={showPreviousLogs} />}
           </div>
           <div className="flex flex-col">
             {log.length === 0 ? (
@@ -287,24 +242,7 @@ export default function App() {
           <div className="flex justify-center mt-4 sticky bottom-0">
             {visibleLogIndex + logsPerPage <
               log.filter((logItem) => logItem.date_id === selectedDateId)
-                .length && (
-              <div className="cursor-pointer" onClick={showMoreLogs}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-white"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-            )}
+                .length && <ArrowDown onClick={showMoreLogs} />}
           </div>
         </div>
       </div>
