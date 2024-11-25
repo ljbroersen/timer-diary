@@ -212,12 +212,16 @@ export default function App() {
           <h2 className="underline-offset-8 underline decoration-white decoration-2">
             Log
           </h2>
-          <div className="flex justify-center mb-4 sticky top-0">
+
+          <div className="flex justify-center sticky top-0 bg-emerald-700 z-10 p-2">
             {visibleLogIndex > 0 && <ArrowUp onClick={showPreviousLogs} />}
           </div>
-          <div className="flex flex-col">
+
+          <div className="flex-grow overflow-y-auto">
             {log.length === 0 ? (
-              <div>No logs for this date.</div>
+              <div className="flex items-center justify-center h-full">
+                No logs for this date.
+              </div>
             ) : (
               log
                 .filter((logItem) => logItem.date_id === selectedDateId)
@@ -239,7 +243,8 @@ export default function App() {
                 ))
             )}
           </div>
-          <div className="flex justify-center mt-4 sticky bottom-0">
+
+          <div className="flex justify-center sticky bottom-0 bg-emerald-700 z-10 p-2">
             {visibleLogIndex + logsPerPage <
               log.filter((logItem) => logItem.date_id === selectedDateId)
                 .length && <ArrowDown onClick={showMoreLogs} />}
