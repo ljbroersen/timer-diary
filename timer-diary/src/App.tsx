@@ -32,7 +32,12 @@ export default function App() {
         const response = await fetch(`${URL}/dates`);
         if (response.ok) {
           const data = await response.json();
-          setDates(data);
+
+          const sortedDates = data.sort(
+            (a: DateRecord, b: DateRecord) =>
+              new Date(b.date).getTime() - new Date(a.date).getTime()
+          );
+          setDates(sortedDates);
         } else {
           console.error("Failed to fetch dates");
         }
