@@ -126,7 +126,7 @@ export default function Timer({
         </div>
       ) : (
         <div>
-          <div className="text-[100px] -mt-8">
+          <div className="text-[100px]">
             <span>{hours.toString().padStart(2, "0")}</span>:
             <span>{minutes.toString().padStart(2, "0")}</span>:
             <span>{seconds.toString().padStart(2, "0")}</span>
