@@ -28,26 +28,30 @@ export default function App() {
   const logsPerPage = 2;
   const URL = "http://localhost:10000";
 
-  useEffect(() => {
-    const fetchDates = async () => {
-      try {
-        const response = await fetch(`${URL}/dates`);
-        if (response.ok) {
-          const data = await response.json();
+  const fetchDates = async () => {
+    try {
+      const response = await fetch(`${URL}/dates`);
+      if (response.ok) {
+        const data = await response.json();
 
-          const sortedDates = data.sort(
-            (a: DateRecord, b: DateRecord) =>
-              new Date(b.date).getTime() - new Date(a.date).getTime()
-          );
-          setDates(sortedDates);
-        } else {
-          console.error("Failed to fetch dates");
-        }
-      } catch (error) {
-        console.error("Error fetching dates:", error);
+        const sortedDates = data.sort(
+          (a: DateRecord, b: DateRecord) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setDates(sortedDates);
+      } else {
+        console.error("Failed to fetch dates");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching dates:", error);
+    }
+  };
 
+  useEffect(() => {
+    fetchDates();
+  }, []);
+
+  useEffect(() => {
     fetchDates();
   }, []);
 
@@ -98,6 +102,7 @@ export default function App() {
         description: description,
       },
     ]);
+
     handleSendLog(currentDate, difference, description);
   };
 
@@ -129,6 +134,9 @@ export default function App() {
       if (response.ok) {
         await response.json();
         fetchLogsForDate(selectedDateId);
+
+        fetchDates();
+        setVisibleIndex(0);
       } else {
         console.error("Failed to create log");
       }
