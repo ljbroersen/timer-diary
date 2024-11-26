@@ -52,10 +52,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    fetchDates();
-  }, []);
-
-  useEffect(() => {
     const fetchLogs = async () => {
       if (!selectedDateId) {
         console.error("No date selected. Skipping fetch.");
