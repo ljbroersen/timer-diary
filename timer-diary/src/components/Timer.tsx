@@ -1,6 +1,6 @@
 import { useTimer } from "react-timer-hook";
 import { useState } from "react";
-import "../App.css";
+import "../index.css";
 import Button from "./Button";
 
 interface MyTimerProps {
