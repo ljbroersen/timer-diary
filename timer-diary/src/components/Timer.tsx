@@ -1,6 +1,6 @@
 import { useTimer } from "react-timer-hook";
 import { useState } from "react";
-import "../App.css";
+import "../index.css";
 import Button from "./Button";
 
 interface MyTimerProps {
@@ -75,7 +75,7 @@ export default function Timer({
         <div>
           <input
             type="number"
-            className="ml-2 mr-2 p-2"
+            className="ml-2 mr-2 p-2 bg-emerald-700 border-2 border-emerald-800"
             placeholder="Hours"
             value={customTime.hours}
             onChange={(e) =>
@@ -87,7 +87,7 @@ export default function Timer({
           />
           <input
             type="number"
-            className="ml-2 mr-2 p-2"
+            className="ml-2 mr-2 p-2 bg-emerald-700 border-2 border-emerald-800"
             placeholder="Minutes"
             value={customTime.minutes}
             onChange={(e) =>
@@ -99,7 +99,7 @@ export default function Timer({
           />
           <input
             type="number"
-            className="ml-2 mr-2 p-2"
+            className="ml-2 mr-2 p-2 bg-emerald-700 border-2 border-emerald-800"
             placeholder="Seconds"
             value={customTime.seconds}
             onChange={(e) =>
@@ -109,13 +109,16 @@ export default function Timer({
               })
             }
           />
-          <p className="m-2 mt-4">Description of activity</p>
-          <input
-            type="text"
-            className="ml-2 mr-2 p-2 w-4/5"
+          <p className="m-2 mt-4 text-pink-400 font-alegreya text-lg">
+            Description of activity
+          </p>
+          <textarea
+            className="ml-2 mr-2 mb-5 p-2 w-full max-w-xl bg-emerald-700 border-2 border-emerald-800 placeholder-white resize-none"
             placeholder="What are you going to do?"
             value={timerDescription}
             onChange={(e) => setTimerDescription(e.target.value)}
+            rows={4}
+            wrap="soft"
           />
 
           <br />
@@ -128,7 +131,7 @@ export default function Timer({
             <span>{minutes.toString().padStart(2, "0")}</span>:
             <span>{seconds.toString().padStart(2, "0")}</span>
           </div>
-          <p>{isRunning ? "Running" : "Not running"}</p>
+          <p className="mb-4">{isRunning ? "Running" : "Not running"}</p>
           <Button onClick={pause}>Pause</Button>
           <Button onClick={resume}>Resume</Button>
           <Button onClick={handleRestart}>Restart</Button>

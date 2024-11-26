@@ -7,7 +7,10 @@ interface ButtonProps {
 
 export default function Button({ onClick, children }: ButtonProps) {
   return (
-    <button className="m-2 mt-4 p-2 bg-zinc-900" onClick={onClick}>
+    <button
+      className="p-4 bg-emerald-800 cursor-pointer hover:bg-emerald-900"
+      onClick={onClick}
+    >
       {children}
     </button>
   );
