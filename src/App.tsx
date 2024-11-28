@@ -90,7 +90,7 @@ export default function App() {
     return `${year}-${month}-${day}`;
   };
 
-  const handleRestart = (difference: string, description: string) => {
+  const handleRestart = async (difference: string, description: string) => {
     const currentDate = new Date();
 
     const selectedDateString = formatDate(currentDate);
