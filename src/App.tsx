@@ -54,7 +54,7 @@ export default function App() {
     const fetchLogs = async () => {
       if (!selectedDate) return;
 
-      const selectedDateString = selectedDate.toISOString().split("T")[0];
+      const selectedDateString = formatDate(selectedDate);
 
       const selectedDateRecord = dates.find(
         (dateRecord) => dateRecord.date === selectedDateString
