@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Timer from "./components/Timer";
 import Calendar from "react-calendar";
 import "../calendar.css";
+import { ArrowDown } from "./components/ArrowDown";
+import { ArrowUp } from "./components/ArrowUp";
 // import "react-calendar/dist/Calendar.css";
 
 type LogItem = {
@@ -21,6 +23,8 @@ export default function App() {
   const [log, setLog] = useState<LogItem[]>([]);
   const [dates, setDates] = useState<DateRecord[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [visibleLogIndex, setVisibleLogIndex] = useState<number>(0);
+  const logsPerPage = 2;
   const URL = "http://localhost:10000";
 
   useEffect(() => {
@@ -143,6 +147,16 @@ export default function App() {
     }
   };
 
+  const showMoreLogs = () => {
+    setVisibleLogIndex((prev) =>
+      Math.min(prev + logsPerPage, log.length - logsPerPage)
+    );
+  };
+
+  const showPreviousLogs = () => {
+    setVisibleLogIndex((prev) => Math.max(prev - logsPerPage, 0));
+  };
+
   return (
     <div className="flex flex-col justify-center h-screen fixed-width">
       <div>
@@ -156,7 +170,10 @@ export default function App() {
           </h2>
           <div className="flex justify-center">
             <Calendar
-              onChange={(date) => setSelectedDate(date as Date)}
+              onChange={(date) => {
+                setSelectedDate(date as Date);
+                setVisibleLogIndex(0);
+              }}
               value={selectedDate}
               tileClassName={({ date }) => {
                 const formattedDate = formatDate(date);
@@ -172,27 +189,37 @@ export default function App() {
           <h2 className="underline-offset-8 underline decoration-white decoration-2">
             Log
           </h2>
+          <div className="flex justify-center sticky top-0 bg-emerald-700 z-10 p-2">
+            {visibleLogIndex > 0 && <ArrowUp onClick={showPreviousLogs} />}
+          </div>
           <div className="flex-grow overflow-y-auto">
             {log.length === 0 ? (
               <div className="flex items-center justify-center h-full">
                 No logs for this date.
               </div>
             ) : (
-              log.map((logItem) => (
-                <div
-                  key={logItem.id}
-                  className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
-                >
-                  <div className="flex flex-col">
-                    <p className="break-words overflow-hidden text-ellipsis">
-                      Time: {logItem.timer_leftover}
-                    </p>
-                    <p className="break-words overflow-hidden text-ellipsis whitespace-pre-wrap">
-                      Description: {logItem.description}
-                    </p>
+              log
+                .slice(visibleLogIndex, visibleLogIndex + logsPerPage)
+                .map((logItem) => (
+                  <div
+                    key={logItem.id}
+                    className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
+                  >
+                    <div className="flex flex-col">
+                      <p className="break-words overflow-hidden text-ellipsis">
+                        Time: {logItem.timer_leftover}
+                      </p>
+                      <p className="break-words overflow-hidden text-ellipsis whitespace-pre-wrap">
+                        Description: {logItem.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))
+            )}
+          </div>
+          <div className="flex justify-center sticky bottom-0 bg-emerald-700 z-10 p-2">
+            {visibleLogIndex + logsPerPage < log.length && (
+              <ArrowDown onClick={showMoreLogs} />
             )}
           </div>
         </div>
