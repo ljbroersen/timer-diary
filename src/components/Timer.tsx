@@ -109,7 +109,7 @@ export default function Timer({
               })
             }
           />
-          <p className="m-2 mt-4 text-pink-400 font-alegreya text-lg">
+          <p className="m-2 mt-3 mb-4 text-pink-400 font-alegreya text-lg underline-offset-8 underline decoration-white decoration-2">
             Description of activity
           </p>
           <textarea

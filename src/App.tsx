@@ -160,7 +160,7 @@ export default function App() {
   return (
     <div className="flex flex-col justify-center h-screen fixed-width">
       <div>
-        <h1>Timer</h1>
+        <h1>Timer Diary</h1>
         <Timer onRestart={handleRestart} />
       </div>
       <div className="flex flex-row mt-5">
@@ -206,10 +206,10 @@ export default function App() {
                     className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
                   >
                     <div className="flex flex-col">
-                      <p className="break-words overflow-hidden text-ellipsis">
+                      <p className="break-words overflow-hidden">
                         Time: {logItem.timer_leftover}
                       </p>
-                      <p className="break-words overflow-hidden text-ellipsis whitespace-pre-wrap">
+                      <p className="break-words overflow-hidden whitespace-pre-wrap">
                         Description: {logItem.description}
                       </p>
                     </div>
