@@ -144,29 +144,31 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col justify-center -mt-10 h-screen fixed-width">
+    <div className="flex flex-col justify-center h-screen fixed-width">
       <div>
         <h1>Timer</h1>
         <Timer onRestart={handleRestart} />
       </div>
-      <div className="flex flex-row mt-6">
-        <div className="flex flex-col w-3/12 mr-2 border-2 border-emerald-800 bg-emerald-700 h-[420px]">
+      <div className="flex flex-row mt-5">
+        <div className="flex flex-col w-4/12 mr-2 border-2 border-emerald-800 bg-emerald-700 h-[490px]">
           <h2 className="underline-offset-8 underline decoration-white decoration-2">
             Calendar
           </h2>
-          <Calendar
-            onChange={(date) => setSelectedDate(date as Date)}
-            value={selectedDate}
-            tileClassName={({ date }) => {
-              const formattedDate = formatDate(date);
-              return dates.some((d) => d.date === formattedDate)
-                ? "bg-emerald-500 text-white"
-                : "";
-            }}
-          />
+          <div className="flex justify-center">
+            <Calendar
+              onChange={(date) => setSelectedDate(date as Date)}
+              value={selectedDate}
+              tileClassName={({ date }) => {
+                const formattedDate = formatDate(date);
+                return dates.some((d) => d.date === formattedDate)
+                  ? "bg-emerald-800 text-white"
+                  : "";
+              }}
+            />
+          </div>
         </div>
 
-        <div className="flex flex-col w-9/12 ml-2 border-2 border-emerald-800 bg-emerald-700">
+        <div className="flex flex-col w-8/12 ml-2 border-2 border-emerald-800 bg-emerald-700">
           <h2 className="underline-offset-8 underline decoration-white decoration-2">
             Log
           </h2>

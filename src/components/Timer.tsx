@@ -113,7 +113,7 @@ export default function Timer({
             Description of activity
           </p>
           <textarea
-            className="ml-2 mr-2 mb-5 p-2 w-full max-w-xl bg-emerald-700 border-2 border-emerald-800 placeholder-white resize-none"
+            className="ml-2 mr-2 mb-3 p-2 w-full max-w-xl bg-emerald-700 border-2 border-emerald-800 placeholder-white resize-none"
             placeholder="What are you going to do?"
             value={timerDescription}
             onChange={(e) => setTimerDescription(e.target.value)}
@@ -131,7 +131,7 @@ export default function Timer({
             <span>{minutes.toString().padStart(2, "0")}</span>:
             <span>{seconds.toString().padStart(2, "0")}</span>
           </div>
-          <p className="mb-4">{isRunning ? "Running" : "Not running"}</p>
+          <p className="mb-3">{isRunning ? "Running" : "Not running"}</p>
           <Button onClick={pause}>Pause</Button>
           <Button onClick={resume}>Resume</Button>
           <Button onClick={handleRestart}>Restart</Button>
