@@ -7,6 +7,9 @@
     "dev": "vite",
     "start": "node server/app.js",
     "build": "tsc -b && vite build",
+    "migrate-latest": "npx knex migrate:latest --knexfile ./knexfile.js",
+    "migrate-down": "npx knex migrate:down --knexfile ./knexfile.js",
+    "seed-data": "npx knex seed:run --knexfile ./knexfile.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -26,6 +29,8 @@
     "@eslint/js": "^9.13.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/knex": "^0.15.2",
+    "@types/pg": "^8.11.10",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
