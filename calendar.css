@@ -45,9 +45,9 @@
 }
 
 .react-calendar__tile--now {
-  background: #fc8b8d;
-  color: black;
+  background: #3e574b;
   font-weight: bold;
+  border: solid 2px white;
 }
 
 .react-calendar__tile--now:hover {
@@ -55,7 +55,7 @@
 }
 
 .react-calendar__tile--active {
-  background: #3e574b;
+  background: #fc8b8d;
   color: white;
   font-weight: bold;
 }

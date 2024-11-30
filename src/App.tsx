@@ -23,6 +23,8 @@ export default function App() {
   const [log, setLog] = useState<LogItem[]>([]);
   const [dates, setDates] = useState<DateRecord[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [currentLogDate, setCurrentLogDate] = useState<Date | null>(null);
+
   const [visibleLogIndex, setVisibleLogIndex] = useState<number>(0);
   const logsPerPage = 2;
   const URL = "http://localhost:10000";
@@ -93,6 +95,10 @@ export default function App() {
   const handleRestart = async (difference: string, description: string) => {
     const currentDate = new Date();
 
+    if (!currentLogDate || currentDate.getDate() !== currentLogDate.getDate()) {
+      setCurrentLogDate(currentDate);
+    }
+
     const selectedDateString = formatDate(currentDate);
     const selectedDateRecord = dates.find(
       (dateRecord) => dateRecord.date === selectedDateString
@@ -112,8 +118,7 @@ export default function App() {
     };
 
     setLog((prevLog) => [...prevLog, newLog]);
-
-    handleSendLog(currentDate, difference, description);
+    await handleSendLog(currentDate, difference, description);
   };
 
   const handleSendLog = async (
