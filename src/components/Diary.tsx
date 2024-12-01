@@ -17,7 +17,7 @@ export type DateRecord = {
   date: string;
 };
 
-const Diary = ({
+export default function Diary({
   URL,
   setDates,
   setAddLog,
@@ -25,7 +25,7 @@ const Diary = ({
   URL: string;
   setDates: (dates: DateRecord[]) => void;
   setAddLog: (addLog: (log: LogItem) => void) => void;
-}) => {
+}) {
   const [log, setLog] = useState<LogItem[]>([]);
   const [dates, setDiaryDates] = useState<DateRecord[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -37,10 +37,9 @@ const Diary = ({
       try {
         const response = await fetch(`${URL}/dates`);
         if (response.ok) {
-          const data = await response.json();
+          const data: DateRecord[] = await response.json();
           const sortedDates = data.sort(
-            (a: DateRecord, b: DateRecord) =>
-              new Date(b.date).getTime() - new Date(a.date).getTime()
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           );
           setDiaryDates(sortedDates);
           setDates(sortedDates);
@@ -171,6 +170,4 @@ const Diary = ({
       </div>
     </div>
   );
-};
-
-export default Diary;
+}
