@@ -140,9 +140,13 @@ export default function Diary({
           {visibleLogIndex > 0 && <ArrowUp onClick={showPreviousLogs} />}
         </div>
         <div className="flex-grow overflow-y-auto">
-          {log.length === 0 ? (
+          {log.length === 0 && selectedDate ? (
             <div className="flex items-center justify-center h-full">
               No logs for this date.
+            </div>
+          ) : selectedDate === null ? (
+            <div className="flex items-center justify-center h-full">
+              Please select a date from the calendar to view logs.
             </div>
           ) : (
             log
@@ -164,6 +168,7 @@ export default function Diary({
               ))
           )}
         </div>
+
         <div className="flex justify-center sticky bottom-0 bg-emerald-700 z-10 p-2">
           {visibleLogIndex + logsPerPage < log.length && (
             <ArrowDown onClick={showMoreLogs} />
