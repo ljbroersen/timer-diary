@@ -58,7 +58,7 @@ export default function Diary({
     setAddLog(() => (newLog: LogItem) => {
       setLog((prevLogs) => [...prevLogs, newLog]);
     });
-  }, [URL, setDates, setAddLog]);
+  }, [URL, setDates, setAddLog, log]);
 
   useEffect(() => {
     const fetchLogs = async () => {

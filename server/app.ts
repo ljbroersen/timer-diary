@@ -46,7 +46,7 @@ app.post("/logs/create", async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    let dateRecord = await knex.table("date_table").where({ date }).first();
+    let dateRecord = await knex("date_table").where({ date }).first();
 
     if (!dateRecord) {
       const [newDateId] = await knex("date_table")
