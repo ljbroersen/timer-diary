@@ -14,36 +14,35 @@ export default function App() {
       currentDate.getMonth() + 1
     ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
 
-    const selectedDateRecord = dates.find(
-      (dateRecord) => dateRecord.date === formattedDate
-    );
-
-    if (!selectedDateRecord) {
-      console.error("No date record found for the selected date.");
-      return;
-    }
-
-    const newLog: LogItem = {
-      id: Math.random(),
-      date_id: selectedDateRecord.id,
-      date: formattedDate,
-      timer_leftover: difference,
-      description,
-    };
-
-    if (addLog) {
-      addLog(newLog);
-    }
-
     try {
       const response = await fetch(`${URL}/logs/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newLog),
+        body: JSON.stringify({
+          date: formattedDate,
+          timer_leftover: difference,
+          description,
+        }),
       });
+
       if (!response.ok) throw new Error("Failed to send log to server");
+
+      const newLog = await response.json();
+
+      console.log("Log created successfully:", newLog);
+
+      if (addLog) {
+        addLog(newLog);
+      }
+
+      if (!dates.some((date) => date.date === formattedDate)) {
+        setDates((prevDates) => [
+          ...prevDates,
+          { id: newLog.date_id, date: formattedDate },
+        ]);
+      }
     } catch (error) {
-      console.error("Error sending log to server:", error);
+      console.error("Error creating log:", error);
     }
   };
 

@@ -4,6 +4,12 @@ import { ArrowDown } from "./ArrowDown";
 import { ArrowUp } from "./ArrowUp";
 import "../../calendar.css";
 
+interface MyLogProps {
+  URL: string;
+  setDates: (dates: DateRecord[]) => void;
+  setAddLog: (addLog: (log: LogItem) => void) => void;
+}
+
 export type LogItem = {
   id: number;
   date_id: number;
@@ -21,11 +27,7 @@ export default function Diary({
   URL,
   setDates,
   setAddLog,
-}: {
-  URL: string;
-  setDates: (dates: DateRecord[]) => void;
-  setAddLog: (addLog: (log: LogItem) => void) => void;
-}) {
+}: Readonly<MyLogProps>) {
   const [log, setLog] = useState<LogItem[]>([]);
   const [dates, setDiaryDates] = useState<DateRecord[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -56,7 +58,7 @@ export default function Diary({
     setAddLog(() => (newLog: LogItem) => {
       setLog((prevLogs) => [...prevLogs, newLog]);
     });
-  }, [URL, setDates, setAddLog]);
+  }, [URL, setDates, setAddLog, log]);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -138,9 +140,13 @@ export default function Diary({
           {visibleLogIndex > 0 && <ArrowUp onClick={showPreviousLogs} />}
         </div>
         <div className="flex-grow overflow-y-auto">
-          {log.length === 0 ? (
+          {log.length === 0 && selectedDate ? (
             <div className="flex items-center justify-center h-full">
               No logs for this date.
+            </div>
+          ) : selectedDate === null ? (
+            <div className="flex items-center justify-center h-full">
+              Please select a date from the calendar to view logs.
             </div>
           ) : (
             log
@@ -162,6 +168,7 @@ export default function Diary({
               ))
           )}
         </div>
+
         <div className="flex justify-center sticky bottom-0 bg-emerald-700 z-10 p-2">
           {visibleLogIndex + logsPerPage < log.length && (
             <ArrowDown onClick={showMoreLogs} />
