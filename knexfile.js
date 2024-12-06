@@ -1,9 +1,8 @@
 import dotenv from "dotenv";
-import { Knex } from "knex";
 
 dotenv.config({ path: "./server/.env.local" });
 
-const development: Knex.Config = {
+const development = {
   client: "pg",
   connection: {
     host: process.env.DB_HOST || "127.0.0.1",
@@ -14,7 +13,7 @@ const development: Knex.Config = {
   },
 };
 
-const production: Knex.Config = {
+const production = {
   client: "postgresql",
   connection: {
     database: process.env.PROD_DB_NAME || "my_db",

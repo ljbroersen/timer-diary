@@ -1,6 +1,6 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
-import knex from "./knex";
+import knex from "./knex.js";
 
 const app = express();
 const port = 10000;
@@ -8,7 +8,7 @@ const port = 10000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/dates", async (req: Request, res: Response): Promise<void> => {
+app.get("/dates", async (req, res) => {
   try {
     const dates = await knex.select().table("date_table");
     res.json(dates);
@@ -18,7 +18,7 @@ app.get("/dates", async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-app.get("/logs", async (req: Request, res: Response): Promise<void> => {
+app.get("/logs", async (req, res) => {
   const { dateId } = req.query;
 
   if (!dateId || typeof dateId !== "string") {
@@ -35,7 +35,7 @@ app.get("/logs", async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-app.post("/logs/create", async (req: Request, res: Response): Promise<void> => {
+app.post("/logs/create", async (req, res) => {
   const { date, timer_leftover, description } = req.body;
 
   if (!date || !timer_leftover || !description) {

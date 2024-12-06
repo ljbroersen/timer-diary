@@ -29,8 +29,6 @@ export default function App() {
 
       const newLog = await response.json();
 
-      console.log("Log created successfully:", newLog);
-
       if (addLog) {
         addLog(newLog);
       }
