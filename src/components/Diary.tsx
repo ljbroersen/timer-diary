@@ -4,6 +4,12 @@ import { ArrowDown } from "./ArrowDown";
 import { ArrowUp } from "./ArrowUp";
 import "../../calendar.css";
 
+interface MyLogProps {
+  URL: string;
+  setDates: (dates: DateRecord[]) => void;
+  setAddLog: (addLog: (log: LogItem) => void) => void;
+}
+
 export type LogItem = {
   id: number;
   date_id: number;
@@ -21,11 +27,7 @@ export default function Diary({
   URL,
   setDates,
   setAddLog,
-}: {
-  URL: string;
-  setDates: (dates: DateRecord[]) => void;
-  setAddLog: (addLog: (log: LogItem) => void) => void;
-}) {
+}: Readonly<MyLogProps>) {
   const [log, setLog] = useState<LogItem[]>([]);
   const [dates, setDiaryDates] = useState<DateRecord[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
