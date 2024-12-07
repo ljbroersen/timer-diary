@@ -71,7 +71,7 @@ export default {
       });
       addComponents({
         ".fixed-width": {
-          width: "1100px",
+          width: "60vw",
         },
       });
     }),
