@@ -14,10 +14,13 @@ export default function App() {
       currentDate.getMonth() + 1
     ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
 
+    const descriptionCheck =
+      description.trim() === "" ? "No description provided" : description;
+
     const payload = {
       date: formattedDate,
       timer_leftover: difference,
-      description,
+      description: descriptionCheck,
     };
 
     try {
