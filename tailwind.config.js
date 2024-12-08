@@ -53,14 +53,15 @@ export default {
         },
         h1: {
           fontSize: theme("fontSize.5xl"),
-          marginBottom: theme("spacing.3"),
+          marginBottom: theme("spacing.1"),
+          marginTop: theme("spacing.3"),
           fontFamily: theme("fontFamily.alegreya"),
           color: theme("colors.pink.400"),
         },
         h2: {
           fontSize: theme("fontSize.2xl"),
-          marginBottom: theme("spacing.3"),
-          marginTop: theme("spacing.4"),
+          marginBottom: theme("spacing.2"),
+          marginTop: theme("spacing.2"),
           fontFamily: theme("fontFamily.alegreya"),
           color: theme("colors.pink.400"),
         },
@@ -71,7 +72,7 @@ export default {
       });
       addComponents({
         ".fixed-width": {
-          width: "1100px",
+          width: "60vw",
         },
       });
     }),

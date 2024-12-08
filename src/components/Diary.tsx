@@ -111,7 +111,7 @@ export default function Diary({
 
   return (
     <div className="flex flex-row mt-5">
-      <div className="flex flex-col w-4/12 mr-2 border-2 border-emerald-800 bg-emerald-700 h-[490px]">
+      <div className="flex flex-col w-4/12 mr-2 border-2 border-emerald-800 bg-emerald-700 2xl:h-[490px] sm-h-screen sm:mb-10">
         <h2 className="underline-offset-8 underline decoration-white decoration-2">
           Calendar
         </h2>
@@ -132,7 +132,7 @@ export default function Diary({
         </div>
       </div>
 
-      <div className="flex flex-col w-8/12 ml-2 border-2 border-emerald-800 bg-emerald-700">
+      <div className="flex flex-col w-8/12 ml-2 border-2 border-emerald-800 bg-emerald-700 2xl:h-[490px] sm-h-screen sm:mb-10">
         <h2 className="underline-offset-8 underline decoration-white decoration-2">
           Log
         </h2>

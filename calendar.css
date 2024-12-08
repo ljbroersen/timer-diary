@@ -3,15 +3,18 @@
   padding: 10px;
   font-family: "Arial", sans-serif;
   color: white;
-  width: 300px;
+  width: 17vw;
 }
 
 /* Navigation Styles (Month Selector and Arrows) */
 .react-calendar__navigation {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
+  width: 15vw;
+  margin: auto;
   padding: 8px 0px;
+  align-items: center;
+  justify-content: center;
 }
 
 .react-calendar__navigation button {
@@ -73,8 +76,11 @@
 }
 
 .react-calendar__month-view__weekdays__weekday {
+  display: flex;
+  width: 15vw;
   text-align: center;
-  padding: 8px 0;
+  justify-content: center;
+  margin: 7px 0px;
 }
 
 /* Additional Styling */
@@ -87,4 +93,14 @@
 .react-calendar__decade-view__years__year {
   margin: 4px 0px;
   padding: 8px 0px;
+}
+
+@media (max-width: 1600px) {
+  .react-calendar__month-view__weekdays__weekday {
+    display: none;
+  }
+
+  .react-calendar__month-view__days__day {
+    margin: 3px;
+  }
 }
