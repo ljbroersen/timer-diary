@@ -95,7 +95,7 @@
   padding: 8px 0px;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1639px) {
   .react-calendar__month-view__weekdays__weekday {
     display: none;
   }
