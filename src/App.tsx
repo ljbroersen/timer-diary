@@ -14,15 +14,17 @@ export default function App() {
       currentDate.getMonth() + 1
     ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
 
+    const payload = {
+      date: formattedDate,
+      timer_leftover: difference,
+      description,
+    };
+
     try {
       const response = await fetch(`${URL}/logs/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: formattedDate,
-          timer_leftover: difference,
-          description,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) throw new Error("Failed to send log to server");
@@ -50,7 +52,7 @@ export default function App() {
         <h1>Timer Diary</h1>
         <Timer onRestart={handleRestart} />
       </div>
-      <Diary URL={URL} setDates={setDates} setAddLog={setAddLog} />
+      <Diary URL={URL} setDiaryDates={setDates} setAddLog={setAddLog} />
     </div>
   );
 }

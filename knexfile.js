@@ -16,9 +16,9 @@ export const development = {
 export const production = {
   client: "postgresql",
   connection: {
-    database: process.env.PROD_DB_NAME || "my_db",
-    user: process.env.PROD_DB_USER || "username",
-    password: process.env.PROD_DB_PASSWORD || "password",
+    database: process.env.DB_NAME || "my_db",
+    user: process.env.DB_USER || "username",
+    password: process.env.DB_PASSWORD || "password",
   },
   pool: {
     min: 2,

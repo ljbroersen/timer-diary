@@ -53,9 +53,10 @@ export default function Timer({
       const minutes = Math.floor((ms % 3600000) / 60000);
       const seconds = Math.floor((ms % 60000) / 1000);
 
-      return `${hours > 0 ? `${hours}` : "00"}:${minutes
-        .toString()
-        .padStart(2, "00")}:${seconds.toString().padStart(2, "00")}`;
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+        2,
+        "0"
+      )}:${String(seconds).padStart(2, "0")}`;
     };
 
     const difference = formatTime(differenceInMs);
@@ -127,10 +128,13 @@ export default function Timer({
       ) : (
         <div>
           <div className="text-[100px]">
-            <span>{hours.toString().padStart(2, "0")}</span>:
-            <span>{minutes.toString().padStart(2, "0")}</span>:
-            <span>{seconds.toString().padStart(2, "0")}</span>
+            <span>
+              {`${hours.toString().padStart(2, "0")}:${minutes
+                .toString()
+                .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}
+            </span>
           </div>
+
           <p className="mb-3">{isRunning ? "Running" : "Not running"}</p>
           <Button onClick={pause}>Pause</Button>
           <Button onClick={resume}>Resume</Button>

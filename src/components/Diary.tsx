@@ -6,7 +6,7 @@ import "../../calendar.css";
 
 interface MyLogProps {
   URL: string;
-  setDates: (dates: DateRecord[]) => void;
+  setDiaryDates: (dates: DateRecord[]) => void;
   setAddLog: (addLog: (log: LogItem) => void) => void;
 }
 
@@ -25,11 +25,11 @@ export type DateRecord = {
 
 export default function Diary({
   URL,
-  setDates,
+  setDiaryDates,
   setAddLog,
 }: Readonly<MyLogProps>) {
   const [log, setLog] = useState<LogItem[]>([]);
-  const [dates, setDiaryDates] = useState<DateRecord[]>([]);
+  const [dates, setDates] = useState<DateRecord[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [visibleLogIndex, setVisibleLogIndex] = useState<number>(0);
   const logsPerPage = 2;
@@ -40,11 +40,12 @@ export default function Diary({
         const response = await fetch(`${URL}/dates`);
         if (response.ok) {
           const data: DateRecord[] = await response.json();
-          const sortedDates = data.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          );
-          setDiaryDates(sortedDates);
+          const compareDates = (a: DateRecord, b: DateRecord): number =>
+            new Date(b.date).getTime() - new Date(a.date).getTime();
+
+          const sortedDates = data.sort(compareDates);
           setDates(sortedDates);
+          setDiaryDates(sortedDates);
         } else {
           console.error("Failed to fetch dates");
         }
@@ -55,10 +56,16 @@ export default function Diary({
 
     fetchDates();
 
-    setAddLog(() => (newLog: LogItem) => {
+    function addNewLog(newLog: LogItem) {
       setLog((prevLogs) => [...prevLogs, newLog]);
-    });
-  }, [URL, setDates, setAddLog, log]);
+    }
+
+    function initializeAddLogSetter() {
+      setAddLog(() => addNewLog);
+    }
+
+    initializeAddLogSetter();
+  }, [URL, setDates, setAddLog, log, setDiaryDates]);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -109,6 +116,40 @@ export default function Diary({
     setVisibleLogIndex((prev) => Math.max(prev - logsPerPage, 0));
   };
 
+  let content;
+
+  if (log.length === 0 && selectedDate) {
+    content = (
+      <div className="flex items-center justify-center h-full">
+        No logs for this date.
+      </div>
+    );
+  } else if (selectedDate === null) {
+    content = (
+      <div className="flex items-center justify-center h-full">
+        Please select a date from the calendar to view logs.
+      </div>
+    );
+  } else {
+    content = log
+      .slice(visibleLogIndex, visibleLogIndex + logsPerPage)
+      .map((logItem) => (
+        <div
+          key={logItem.id}
+          className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
+        >
+          <div className="flex flex-col">
+            <p className="break-words overflow-hidden">
+              Time: {logItem.timer_leftover}
+            </p>
+            <p className="break-words overflow-hidden whitespace-pre-wrap">
+              Description: {logItem.description}
+            </p>
+          </div>
+        </div>
+      ));
+  }
+
   return (
     <div className="flex flex-row mt-3">
       <div className="flex flex-col w-4/12 mr-2 border-2 border-emerald-800 bg-emerald-700 2xl:h-[490px] sm-h-screen sm:mb-10">
@@ -139,35 +180,7 @@ export default function Diary({
         <div className="flex justify-center sticky top-0 bg-emerald-700 z-10 p-2">
           {visibleLogIndex > 0 && <ArrowUp onClick={showPreviousLogs} />}
         </div>
-        <div className="flex-grow overflow-y-auto">
-          {log.length === 0 && selectedDate ? (
-            <div className="flex items-center justify-center h-full">
-              No logs for this date.
-            </div>
-          ) : selectedDate === null ? (
-            <div className="flex items-center justify-center h-full">
-              Please select a date from the calendar to view logs.
-            </div>
-          ) : (
-            log
-              .slice(visibleLogIndex, visibleLogIndex + logsPerPage)
-              .map((logItem) => (
-                <div
-                  key={logItem.id}
-                  className="p-4 [&:nth-child(even)]:bg-emerald-900 [&:nth-child(odd)]:bg-emerald-800"
-                >
-                  <div className="flex flex-col">
-                    <p className="break-words overflow-hidden">
-                      Time: {logItem.timer_leftover}
-                    </p>
-                    <p className="break-words overflow-hidden whitespace-pre-wrap">
-                      Description: {logItem.description}
-                    </p>
-                  </div>
-                </div>
-              ))
-          )}
-        </div>
+        <div className="flex-grow overflow-y-auto">{content}</div>
 
         <div className="flex justify-center sticky bottom-0 bg-emerald-700 z-10 p-2">
           {visibleLogIndex + logsPerPage < log.length && (
