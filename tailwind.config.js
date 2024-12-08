@@ -61,7 +61,7 @@ export default {
         h2: {
           fontSize: theme("fontSize.2xl"),
           marginBottom: theme("spacing.2"),
-          marginTop: theme("spacing.2"),
+          marginTop: theme("spacing.3"),
           fontFamily: theme("fontFamily.alegreya"),
           color: theme("colors.pink.400"),
         },

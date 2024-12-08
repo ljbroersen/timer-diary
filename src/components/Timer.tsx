@@ -109,11 +109,11 @@ export default function Timer({
               })
             }
           />
-          <p className="m-2 mt-3 mb-4 text-pink-400 font-alegreya text-lg underline-offset-8 underline decoration-white decoration-2">
+          <p className="m-2 mt-2 mb-4 text-pink-400 font-alegreya text-lg underline-offset-8 underline decoration-white decoration-2">
             Description of activity
           </p>
           <textarea
-            className="ml-2 mr-2 mb-3 p-2 w-full max-w-xl bg-emerald-700 border-2 border-emerald-800 placeholder-white resize-none"
+            className="ml-2 mr-2 mb-2 p-2 w-full max-w-xl bg-emerald-700 border-2 border-emerald-800 placeholder-white resize-none"
             placeholder="What are you going to do?"
             value={timerDescription}
             onChange={(e) => setTimerDescription(e.target.value)}
