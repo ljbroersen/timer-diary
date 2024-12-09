@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import knex from "./knex.js";
+import { port } from "./config.js";
 
 const app = express();
-const port = 10000;
 
 app.use(cors());
 app.use(express.json());

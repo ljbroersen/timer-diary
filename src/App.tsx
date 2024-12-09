@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Timer from "./components/Timer";
 import Diary, { LogItem, DateRecord } from "./components/Diary";
+import { port } from "../server/config.js";
 
 export default function App() {
-  const URL = "http://localhost:10000";
+  const URL = `http://localhost:${port}`;
 
   const [addLog, setAddLog] = useState<((log: LogItem) => void) | null>(null);
   const [dates, setDates] = useState<DateRecord[]>([]);
