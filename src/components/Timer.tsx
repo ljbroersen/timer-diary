@@ -3,6 +3,7 @@ import { useState } from "react";
 import "../index.css";
 import Button from "./Button";
 
+
 interface MyTimerProps {
   expiryTimestamp?: Date;
   onRestart?: (difference: string, description: string) => void;
@@ -53,9 +54,10 @@ export default function Timer({
       const minutes = Math.floor((ms % 3600000) / 60000);
       const seconds = Math.floor((ms % 60000) / 1000);
 
-      return `${hours > 0 ? `${hours}` : "00"}:${minutes
-        .toString()
-        .padStart(2, "00")}:${seconds.toString().padStart(2, "00")}`;
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+        2,
+        "0"
+      )}:${String(seconds).padStart(2, "0")}`;
     };
 
     const difference = formatTime(differenceInMs);
@@ -109,11 +111,11 @@ export default function Timer({
               })
             }
           />
-          <p className="m-2 mt-4 text-pink-400 font-alegreya text-lg">
+          <p className="m-2 mt-2 mb-4 text-pink-400 font-alegreya text-lg underline-offset-8 underline decoration-white decoration-2">
             Description of activity
           </p>
           <textarea
-            className="ml-2 mr-2 mb-5 p-2 w-full max-w-xl bg-emerald-700 border-2 border-emerald-800 placeholder-white resize-none"
+            className="ml-2 mr-2 mb-2 p-2 w-full max-w-xl bg-emerald-700 border-2 border-emerald-800 placeholder-white resize-none"
             placeholder="What are you going to do?"
             value={timerDescription}
             onChange={(e) => setTimerDescription(e.target.value)}
@@ -127,11 +129,14 @@ export default function Timer({
       ) : (
         <div>
           <div className="text-[100px]">
-            <span>{hours.toString().padStart(2, "0")}</span>:
-            <span>{minutes.toString().padStart(2, "0")}</span>:
-            <span>{seconds.toString().padStart(2, "0")}</span>
+            <span>
+              {`${hours.toString().padStart(2, "0")}:${minutes
+                .toString()
+                .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}
+            </span>
           </div>
-          <p className="mb-4">{isRunning ? "Running" : "Not running"}</p>
+
+          <p className="mb-3">{isRunning ? "Running" : "Not running"}</p>
           <Button onClick={pause}>Pause</Button>
           <Button onClick={resume}>Resume</Button>
           <Button onClick={handleRestart}>Restart</Button>

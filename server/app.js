@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import knex from "./knex.js";
+import { port } from "./config.js";
+
 const app = express();
-const port = 10000;
 
 app.use(cors());
 app.use(express.json());
@@ -20,6 +21,11 @@ app.get("/dates", async (req, res) => {
 app.get("/logs", async (req, res) => {
   const { dateId } = req.query;
 
+  if (!dateId || typeof dateId !== "string") {
+    res.status(400).json({ message: "Invalid or missing dateId parameter" });
+    return;
+  }
+
   try {
     const logs = await knex("logs_table").where("date_id", dateId);
     res.json(logs);
@@ -32,18 +38,23 @@ app.get("/logs", async (req, res) => {
 app.post("/logs/create", async (req, res) => {
   const { date, timer_leftover, description } = req.body;
 
-  try {
-    let dateRecord = await knex.table("date_table").where({ date }).first();
+  if (!date || !timer_leftover || !description) {
+    res.status(400).json({
+      message: "Missing required fields: date, timer_leftover, description",
+    });
+    return;
+  }
 
+  try {
+    let dateRecord = await knex("date_table").where({ date }).first();
     if (!dateRecord) {
-      const [newDate] = await knex("date_table")
+      const [newDateId] = await knex("date_table")
         .insert({ date })
         .returning("id");
-
-      dateRecord = { id: newDate.id, date };
+      dateRecord = { id: newDateId };
     }
 
-    const newLog = await knex("logs_table")
+    const [newLog] = await knex("logs_table")
       .insert({
         date_id: dateRecord.id,
         timer_leftover,

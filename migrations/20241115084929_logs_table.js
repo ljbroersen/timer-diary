@@ -22,5 +22,5 @@ export function up(knex) {
  * @returns { Promise<void> }
  */
 export function down(knex) {
-  return knex.schema.dropTable("logs_table"); // Drop the logs table if rolling back
+  return knex.schema.dropTable("logs_table");
 }
