@@ -47,19 +47,20 @@ app.post("/logs/create", async (req, res) => {
 
   try {
     let dateRecord = await knex("date_table").where({ date }).first();
-
     if (!dateRecord) {
       const [newDateId] = await knex("date_table")
         .insert({ date })
         .returning("id");
-      dateRecord = { id: newDateId, date };
+      dateRecord = { id: newDateId };
     }
 
-    const newLog = await knex("logs_table").insert({
-      date_id: date,
-      timer_leftover,
-      description,
-    });
+    const [newLog] = await knex("logs_table")
+      .insert({
+        date_id: dateRecord.id,
+        timer_leftover,
+        description,
+      })
+      .returning("*");
 
     res.status(201).json(newLog);
   } catch (error) {
