@@ -77,10 +77,11 @@
 
 .react-calendar__month-view__weekdays__weekday {
   display: flex;
-  width: 15vw;
-  text-align: center;
   justify-content: center;
-  margin: 7px 0px;
+  margin: 7px 0px 7px -2px;
+}
+.react-calendar__month-view__weekdays__weekday:first-child {
+  margin-left: 5px;
 }
 
 /* Additional Styling */
