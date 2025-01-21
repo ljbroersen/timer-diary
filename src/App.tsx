@@ -1,15 +1,72 @@
+"use client";
+
 import { useState } from "react";
 import Timer from "./components/Timer";
 import Diary, { LogItem, DateRecord } from "./components/Diary";
 import { port } from "../server/config.js";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+const URL = `http://localhost:${port}`;
 
 export default function App() {
-  const URL = `http://localhost:${port}`;
+  const queryClient = useQueryClient();
 
   const [addLog, setAddLog] = useState<((log: LogItem) => void) | null>(null);
   const [dates, setDates] = useState<DateRecord[]>([]);
 
-  const handleRestart = async (difference: string, description: string) => {
+  const createLogMutation = useMutation({
+    mutationFn: async (newLog: {
+      date: string;
+      timer_leftover: string;
+      description: string;
+    }) => {
+      const response = await fetch(`${URL}/logs/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newLog),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send log to server");
+      }
+
+      return response.json();
+    },
+    onMutate: async (newLog) => {
+      await queryClient.cancelQueries({ queryKey: ["logs"] });
+
+      const previousLogs = queryClient.getQueryData<LogItem[]>(["logs"]);
+
+      queryClient.setQueryData(["logs"], (old: any) => [
+        ...(old || []),
+        { ...newLog, id: Date.now() },
+      ]);
+
+      return { previousLogs };
+    },
+    onError: (error, context: any) => {
+      console.error("Error creating log:", error);
+      if (context?.previousLogs) {
+        queryClient.setQueryData(["logs"], context.previousLogs);
+      }
+    },
+    onSuccess: (newLog) => {
+      queryClient.invalidateQueries({ queryKey: ["logs"] });
+
+      if (addLog) {
+        addLog(newLog);
+      }
+
+      if (!dates.some((date) => date.date === newLog.date)) {
+        setDates((prevDates) => [
+          ...prevDates,
+          { id: newLog.date_id, date: newLog.date },
+        ]);
+      }
+    },
+  });
+
+  const handleRestart = (difference: string, description: string) => {
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${String(
       currentDate.getMonth() + 1
@@ -24,30 +81,7 @@ export default function App() {
       description: descriptionCheck,
     };
 
-    try {
-      const response = await fetch(`${URL}/logs/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error("Failed to send log to server");
-
-      const newLog = await response.json();
-
-      if (addLog) {
-        addLog(newLog);
-      }
-
-      if (!dates.some((date) => date.date === formattedDate)) {
-        setDates((prevDates) => [
-          ...prevDates,
-          { id: newLog.date_id, date: formattedDate },
-        ]);
-      }
-    } catch (error) {
-      console.error("Error creating log:", error);
-    }
+    createLogMutation.mutate(payload);
   };
 
   return (
