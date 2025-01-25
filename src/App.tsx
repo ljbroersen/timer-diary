@@ -37,20 +37,28 @@ export default function App() {
 
       const previousLogs = queryClient.getQueryData<LogItem[]>(["logs"]);
 
-      queryClient.setQueryData(["logs"], (old: any) => [
+      queryClient.setQueryData<LogItem[]>(["logs"], (old) => [
         ...(old || []),
-        { ...newLog, id: Date.now() },
+        {
+          ...newLog,
+          id: Date.now(),
+          date_id: -1,
+        },
       ]);
 
       return { previousLogs };
     },
-    onError: (error, context: any) => {
+    onError: (
+      error: Error,
+      _variables: { date: string; timer_leftover: string; description: string },
+      context: { previousLogs?: LogItem[] } | undefined
+    ) => {
       console.error("Error creating log:", error);
       if (context?.previousLogs) {
         queryClient.setQueryData(["logs"], context.previousLogs);
       }
     },
-    onSuccess: (newLog) => {
+    onSuccess: (newLog: LogItem) => {
       queryClient.invalidateQueries({ queryKey: ["logs"] });
 
       if (addLog) {
