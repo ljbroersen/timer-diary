@@ -43,7 +43,7 @@ export default function Diary({
           const compareDates = (a: DateRecord, b: DateRecord): number =>
             new Date(b.date).getTime() - new Date(a.date).getTime();
 
-          const sortedDates = data.sort(compareDates);
+          const sortedDates = data.toSorted(compareDates);
           setDates(sortedDates);
           setDiaryDates(sortedDates);
         } else {
